@@ -1,64 +1,51 @@
 # Pareido: Seeing the Unseen
 
-> "The world is full of junk that piles up into bizarre shapes. The game is a special scanner that uses AI to 'see' the true, stylish essence of these objects. Your camera is not just a lens, but a prism transforming the mundane into art."
+> Pareidolia: the perception of apparently significant patterns or recognizable images, especially faces, in random or accidental arrangements of shapes and lines ([Wikipedia](https://en.wikipedia.org/wiki/Pareidolia)).
 
-**Pareido** is an AI-powered augmented reality game where you hunt for visual images in the real world. Unlike Pokémon GO, which ties invisible creatures to GPS coordinates, Pareido encourages observation and a creative view of your surroundings.
+**Pareido** is an AI-powered game where you hunt for visual images in the real world. Unlike Pokémon GO, which ties invisible creatures to GPS coordinates, Pareido encourages observation and a creative view of your surroundings. 
 
 ---
 
 ## Core Mechanics
 
-### 1. The Capture & Decision Phase: "Keep or Salvage"
+### 📷 Scan & Transform
+Point your camera at any everyday object—a crumpled can, a weird stain, an interesting shadow. The AI analyzes it and transforms it into a unique character card with its own name and artwork.
 
-The process doesn't end with just taking the photo. Once the AI generates the "Character", you have a strategic choice to make immediately.
+### ⚡ Creativity Score
+Each scan gets rated on creativity (how interesting/unusual the subject is). Higher scores mean rarer, more valuable cards. Hunt for the weird stuff.
 
-*   **The Scan**: You photograph a pile of scrap. The AI generates "Scrap Golem mk.1".
-*   **The Choice**:
-    *   **Option A: Stabilize (Save to Pocket)**: You spend a small amount of energy to keep the character in your collection. You do this if the generation turned out cool, unique, or high-tier.
-    *   **Option B: Deconstruct (Salvage for Materials)**: You decide the character is ugly or too common. You "break it down."
-        *   **Result**: The character is destroyed.
-        *   **Reward**: You receive a large amount of raw materials (e.g., *20x Rust, 10x Plastic*).
-    *   *Why this works*: Even "bad" photos are valuable because they fuel your resources for customization.
+### 🧪 Materials System
+Every card contains raw materials: **Metal**, **Synthetic**, **Stone**, **Organic**, and **Fabric**. These are extracted based on what the AI detects in your original photo.
 
-### 2. Advanced Crafting: "Style Augmentation"
+### 🔨 Deconstruct or Stabilize
+After scanning, choose your path:
+- **Stabilize** → Save the card to your collection
+- **Deconstruct** → Break it down for materials (instead of card you get resources)
 
-You don't just breed characters; you can now edit them using the materials you collected from dismantling others. This is **Image-to-Image Inpainting/Editing** powered by game mechanics.
+### 🔮 Merge Cards
+Combine two cards from your collection to create a hybrid entity. The merged card inherits traits from both parents, gets boosted stats, and generates completely new artwork. Experiment freely.
 
-*   **The Workshop**: Select a Character from your Pocket.
-*   **Infusion**: Spend your collected materials to add specific visual traits.
-    *   *Spend 50 Organic Essence*: The AI adds moss, vines, and flowers to your Cyber-Robot.
-    *   *Spend 50 Neon Essence*: The AI adds glowing runes or LED strips to your Stone Golem.
-    *   *Spend 50 Textile Essence*: The AI dresses your character in a tattered cloak or stylish streetwear.
-*   **Result**: You turn a basic "Random Gen" into a "Masterpiece" by carefully layering different materials.
+### 🏆 Climb the Ranks
+Earn XP from scans and level up. Check the global leaderboard to see where you stand among other hunters.
 
-### 3. The Social Flex: "The Grand Gallery"
+### 🌠 Gallery
+Gather your cards into a sharable gallery, track your charecters and increase your score on leaderboard.
 
-This answers the question: "How do I show everyone I am better/more creative than them?"
-
-*   **The Feed**: A global or local feed (like Instagram/Pinterest but for game characters) where players publish their best works.
-*   **Curator Mode**: Players scroll and "Rate" other works.
-    *   *Ratings aren't just likes.* Players award specific badges: "Avant-Garde," "Cursed," "Divine," "Trash-Core."
-*   **The "Visionary Rank" (Your Creative Level)**:
-    *   This is your "Level" in the game. It is **not** based on how much you walk or grind.
-    *   It is calculated based on the **Engagement** your art receives.
-    *   *Formula*: `(Views + Unique Badges + Saves) = Visionary XP`.
-    *   **Ranks**:
-        *   *Level 1*: Sightseer (Nobody knows you).
-        *   *Level 10*: Trendsetter (You have followers).
-        *   *Level 50*: The Oracle (Your style defines the meta of the game).
-    *   **High Rank Perks**: Unlock exclusive AI filters, rare frames, and the ability to host your own mini-exhibitions.
+### 🌟 Use Resources to upgrade your cards (coming soon)
+Use collected resources to augment your cards, add some visual improvements, add abilities.
+Our main goal --> convert this into a game, where users can compete with their charecters and climb the leaderboard.
 
 ---
 
 ## Summary of the Flow
 
-1.  **Exploration**: Find trash/objects in the real world.
+1.  **Exploration**: Find interesting objects in the real world.
 2.  **Interaction**: Scan it.
 3.  **Strategy**:
     *   Is it cool? -> **Keep it.**
     *   Is it boring? -> **Deconstruct it** for materials.
 4.  **Creativity**: Use materials to **customize/upgrade** your best characters.
-5.  **Dominance**: Post your masterpiece to the **Gallery**. Gain "Visionary Rank" as people admire your work. Prove you have the best artistic eye.
+5.  **Leaderboard**: Post your masterpiece to the **Gallery**. Gain "Visionary Rank" as people admire your work. Prove you have the best artistic eye.
 
 ---
 
