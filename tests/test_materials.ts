@@ -3,12 +3,11 @@ import { ThinkingLevel } from '@google/genai';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-function readPrompt(fileName: string): string {
-    const filePath = join(__dirname, fileName);
+function readPrompt(filePath: string): string {
     return readFileSync(filePath, 'utf-8');
 }
 
-export const ANALYSIS_PROMPT = readPrompt('system_prompt.txt');
+export const ANALYSIS_PROMPT = readPrompt('tests/system_prompt.txt');
 
 // With file path
 const result = await analyzeImage({
