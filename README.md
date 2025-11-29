@@ -64,25 +64,14 @@ This answers the question: "How do I show everyone I am better/more creative tha
 
 ## Examples
 
-### Input Examples (Raw Scans)
+The scanning and transformation process in action. Left column shows raw input photos of everyday objects; right column shows the AI-generated "Resonant" character cards.
 
-These are examples of raw photos taken of everyday objects or "junk".
-
-*   `tests/assets/photo_2025-11-29 12.45.24.jpeg`
-*   `tests/assets/photo_2025-11-29 12.45.28.jpeg`
-*   `tests/assets/photo_2025-11-29 12.45.31.jpeg`
-*   `tests/assets/photo_2025-11-29 12.45.37.jpeg`
-*   `tests/assets/photo_2025-11-29 12.45.43.jpeg`
-
-### Output Examples (Generated Resonants)
-
-These are examples of the AI-generated "Resonants" derived from scans.
-
-*   `tests/output/generated_image_1.jpg`
-*   `tests/output/generated_image_2.jpg`
-*   `tests/output/generated_image_3.jpg`
-*   `tests/output/generated_image_4.jpg`
-*   `tests/output/generated_image_5.jpg`
+| Input (Raw Scan) | AI-Generated Card (Resonant) |
+|---|---|
+| ![Input 1](tests/assets/photo_2025-11-29%2012.45.24.jpeg) | ![Output 1](tests/output/generated_image_1.jpg) |
+| ![Input 3](tests/assets/photo_2025-11-29%2012.45.31.jpeg) | ![Output 3](tests/output/generated_image_3.jpg) |
+| ![Input 4](tests/assets/photo_2025-11-29%2012.45.37.jpeg) | ![Output 4](tests/output/generated_image_4.jpg) |
+| ![Input 5](tests/assets/photo_2025-11-29%2012.45.43.jpeg) | ![Output 5](tests/output/generated_image_5.jpg) |
 
 ---
 
