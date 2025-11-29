@@ -21,4 +21,4 @@ interface GalleryItem {
     analysis: AnalysisResult
 }
 
-export { MaterialCounts, AnalysisResult, GalleryItem };
+export type { MaterialCounts, AnalysisResult, GalleryItem };

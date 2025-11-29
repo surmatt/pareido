@@ -97,7 +97,7 @@ export async function generateImage(
     }
 
     const response = await client.models.generateContent({
-        model: options.modelName as string || "gemini-2.5-flash-image",
+        model: options.modelName as string || "gemini-3-pro-image-preview",
         contents: contentParts,
         config: {
             imageConfig: {

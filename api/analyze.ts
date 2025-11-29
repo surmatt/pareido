@@ -1,6 +1,12 @@
 import express, { Request, Response } from 'express';
 import { analyzeImage } from '../src/lib/analyzer.ts';
-import { ANALYSIS_PROMPT } from '../prompts.ts';
+import { readFileSync } from 'fs';
+
+function readPrompt(filePath: string): string {
+  return readFileSync(filePath, 'utf-8');
+}
+
+export const ANALYSIS_PROMPT = readPrompt('system_prompt.txt');
 
 const router = express.Router();
 
@@ -21,10 +27,10 @@ router.post('/analyze', async (req: Request, res: Response) => {
     console.log('Analyzing image... on model gemini-2.5-flash');
 
     const data = await analyzeImage({
-        image,
-        apiKey,
-        analysisPrompt: ANALYSIS_PROMPT,
-        modelName: 'gemini-2.5-flash'
+      image,
+      apiKey,
+      analysisPrompt: ANALYSIS_PROMPT,
+      modelName: 'gemini-flash-latest'
     });
 
     res.json(data);
