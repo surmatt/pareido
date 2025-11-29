@@ -6,15 +6,22 @@ const router = express.Router();
 
 router.post('/save', async (req: Request, res: Response) => {
   try {
-    const { image, data } = req.body;
+    const { image: originalImage, data } = req.body;
 
-    const template_prompt = "Create an animated creative gaming card from the attached image and this suggestion prompt: " + data.prompt_for_image_generation;
-
+    const template_prompt = `
+    Create an animated creative gaming card from the attached image
+    and put it into attached frame, add this name "${data.name}" at the top and replace "LVL" with creativity-score "${data.creativityScore}".
+    Output should be a high-quality gaming card image, hearthstone-like.
+    Also use this suggestion prompt for animating object: ${data.prompt_for_image_generation};
+    `
     const generatedImage = await generateImage({
         generationPrompt: template_prompt,
-        imageInput: image,
-        modelName: 'gemini-2.5-flash-image',
-    });
+        imageInput: originalImage,
+        templateImageInput: 'assets/template.png',
+        // modelName: 'gemini-2.5-flash-image',
+        modelName: 'gemini-3-pro-image-preview',
+    }
+    );
 
     if (!generatedImage) {
         throw new Error("Failed to generate image");
