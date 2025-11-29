@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import compression from 'compression';
 import sirv from 'sirv';
 import analyzeRouter from './api/analyze.js';
+import saveRouter from './api/save.js';
 // Note: When running with tsx/node in ESM mode, we keep .js extensions for imports 
 // or configure tsconfig to handle resolution. Since we are using tsx, it handles .ts files 
 // but local imports might still need careful handling. 
@@ -26,6 +27,7 @@ app.use(express.json({ limit: '10mb' }));
 
 // API Routes
 app.use('/api', analyzeRouter);
+app.use('/api', saveRouter);
 
 // Add Vite or respective production middlewares
 let vite: any;

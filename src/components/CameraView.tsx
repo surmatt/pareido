@@ -1,10 +1,11 @@
 import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ImagePlus, Loader2 } from "lucide-react"
+import { Loader2, Images, ImagePlus } from "lucide-react"
 import { ResultDialog } from "./ResultDialog"
 import { GameHUD } from "./GameHUD"
 import { useLevelSystem } from "@/lib/level-system"
 import { useMaterialSystem } from "@/lib/material-system"
+import { useNavigate } from "react-router-dom"
 
 interface MaterialCounts {
   metal: number
@@ -22,6 +23,7 @@ interface AnalysisResult {
 }
 
 export function CameraView() {
+  const navigate = useNavigate()
   const videoRef = useRef<HTMLVideoElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [stream, setStream] = useState<MediaStream | null>(null)
@@ -104,11 +106,16 @@ export function CameraView() {
     if (ctx) {
       ctx.drawImage(videoRef.current, 0, 0)
       const imageData = canvas.toDataURL("image/jpeg", 0.8)
+      setCapturedImage(imageData)
       analyzeImage(imageData)
     }
   }
 
   const handleGalleryClick = () => {
+    navigate('/gallery')
+  }
+
+  const handleUploadClick = () => {
     fileInputRef.current?.click()
   }
 
@@ -125,10 +132,47 @@ export function CameraView() {
     }
   }
 
-  const handleStabilize = () => {
-    console.log("Stabilizing character:", result)
-    setShowModal(false)
-    // TODO: Implement save logic
+  const handleStabilize = async () => {
+    if (!result || !capturedImage) return
+
+    try {
+      // Call /api/save
+      const response = await fetch('/api/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          image: capturedImage,
+          data: result
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Save failed')
+      }
+
+      const responseData = await response.json()
+      
+      // Save to localStorage
+      const newItem = {
+        id: Date.now().toString(),
+        timestamp: Date.now(),
+        image: responseData.image, // The empty 4:5 image from server
+        originalImage: capturedImage, // Save original too just in case
+        analysis: result
+      }
+
+      const existingItems = JSON.parse(localStorage.getItem('gallery_items') || '[]')
+      localStorage.setItem('gallery_items', JSON.stringify([newItem, ...existingItems]))
+
+      setShowModal(false)
+      navigate('/gallery')
+
+    } catch (error) {
+      console.error("Error stabilizing:", error)
+      alert("Failed to stabilize entity.")
+    }
   }
 
   const handleDeconstruct = () => {
@@ -187,7 +231,7 @@ export function CameraView() {
             onClick={handleGalleryClick}
             disabled={analyzing}
           >
-            <ImagePlus className="h-6 w-6" />
+            <Images className="h-6 w-6" />
           </Button>
 
           <input 
@@ -207,8 +251,16 @@ export function CameraView() {
             <div className="h-full w-full rounded-full bg-white" />
           </Button>
 
-          {/* Spacer for symmetry */}
-          <div className="w-12" />
+          {/* Upload Button */}
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 text-white"
+            onClick={handleUploadClick}
+            disabled={analyzing}
+          >
+            <ImagePlus className="h-6 w-6" />
+          </Button>
         </div>
       </div>
 
@@ -222,4 +274,3 @@ export function CameraView() {
     </>
   )
 }
-
