@@ -10,12 +10,30 @@ interface ImageGeneratorOptions {
 }
 
 /**
- * Reads an image from a file path or base64 string and returns inline data for API content
- * @param imageSource - Either a file path to an image or a base64-encoded image string
+ * Reads an image from a file path, URL, or base64 string and returns inline data for API content
+ * @param imageSource - Either a file path, URL (http/https), or a base64-encoded image string
  * @returns Promise resolving to the inline data object for the image
  */
 async function readImageToInlineData(imageSource: string): Promise<{ inlineData: { mimeType: string; data: string } }> {
-    if (imageSource.startsWith("data:image") || imageSource.startsWith("/9j/") || imageSource.includes("base64")) {
+    // Check if it's a URL (R2 storage or other HTTP URLs)
+    if (imageSource.startsWith("http://") || imageSource.startsWith("https://")) {
+        const response = await fetch(imageSource);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image from URL: ${response.statusText}`);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+        const base64Data = Buffer.from(arrayBuffer).toString("base64");
+        
+        // Determine mime type from content-type header or URL extension
+        const contentType = response.headers.get("content-type") || "image/jpeg";
+        
+        return {
+            inlineData: {
+                mimeType: contentType,
+                data: base64Data,
+            },
+        };
+    } else if (imageSource.startsWith("data:image") || imageSource.startsWith("/9j/") || imageSource.includes("base64")) {
         // Base64 encoded image
         const base64Data = imageSource.includes("base64,")
             ? imageSource.split("base64,")[1]

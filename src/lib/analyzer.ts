@@ -52,11 +52,29 @@ export async function analyzeImage(options: AnalyzeImageOptions): Promise<Analys
     throw new Error('API key is required. Provide it via options.apiKey or GEMINI_API_KEY environment variable');
   }
 
-  // Determine if input is base64 or file path
+  // Determine if input is base64, URL, or file path
   let base64Data: string;
   let mimeType = 'image/jpeg';
 
-  if (image.startsWith('data:image/')) {
+  if (image.startsWith('http://') || image.startsWith('https://')) {
+    // URL (R2 storage or other HTTP URLs) - fetch and convert to base64
+    try {
+      const response = await fetch(image);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch image from URL: ${response.statusText}`);
+      }
+      const arrayBuffer = await response.arrayBuffer();
+      base64Data = Buffer.from(arrayBuffer).toString('base64');
+      
+      // Determine mime type from content-type header
+      const contentType = response.headers.get('content-type');
+      if (contentType) {
+        mimeType = contentType;
+      }
+    } catch (error) {
+      throw new Error(`Failed to fetch image from URL: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  } else if (image.startsWith('data:image/')) {
     // Already base64 with data URL prefix
     base64Data = image.replace(/^data:image\/\w+;base64,/, '');
     const mimeMatch = image.match(/^data:(image\/\w+);base64,/);
