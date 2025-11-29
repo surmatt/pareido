@@ -7,7 +7,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Hammer, Save, Zap, Box, Leaf, Layers, LucideIcon } from "lucide-react"
+import { Hammer, Save, Zap, Box, Leaf, Layers, LucideIcon, Loader2 } from "lucide-react"
 
 interface MaterialCounts {
   metal: number
@@ -30,6 +30,7 @@ interface ResultDialogProps {
   result: AnalysisResult | null
   onStabilize: () => void
   onDeconstruct: () => void
+  isSaving?: boolean
 }
 
 const MATERIAL_CONFIG: Record<string, { icon: LucideIcon, color: string }> = {
@@ -46,6 +47,7 @@ export function ResultDialog({
   result,
   onStabilize,
   onDeconstruct,
+  isSaving = false,
 }: ResultDialogProps) {
   if (!result) return null
 
@@ -109,9 +111,10 @@ export function ResultDialog({
             onClick={onStabilize}
             className="w-full sm:flex-1 gap-2 bg-emerald-900/20 text-emerald-400 hover:bg-emerald-900/40 border-emerald-900/50 hover:text-emerald-300"
             variant="outline"
+            disabled={isSaving}
           >
-            <Save className="h-4 w-4" />
-            Stabilize
+            {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            {isSaving ? "Stabilizing..." : "Stabilize"}
           </Button>
         </DialogFooter>
       </DialogContent>

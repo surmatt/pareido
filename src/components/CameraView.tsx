@@ -31,6 +31,7 @@ export function CameraView() {
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
   const { gainXP } = useLevelSystem()
   const { gainMaterials } = useMaterialSystem()
 
@@ -135,6 +136,7 @@ export function CameraView() {
   const handleStabilize = async () => {
     if (!result || !capturedImage) return
 
+    setIsSaving(true)
     try {
       // Call /api/save
       const response = await fetch('/api/save', {
@@ -270,6 +272,7 @@ export function CameraView() {
         result={result}
         onStabilize={handleStabilize}
         onDeconstruct={handleDeconstruct}
+        isSaving={isSaving}
       />
     </>
   )

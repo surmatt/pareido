@@ -1,19 +1,32 @@
 import express, { Request, Response } from 'express';
-import path from 'path';
+import { generateImage } from '../src/lib/image_generator.ts';
+import { uploadBase64ToS3 } from '../src/lib/s3Client.ts';
 
 const router = express.Router();
-
-// 4x5 transparent PNG (generated for 4:5 aspect ratio placeholder)
-const EMPTY_IMAGE_4_5 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC";
 
 router.post('/save', async (req: Request, res: Response) => {
   try {
     const { image, data } = req.body;
 
-    // Return empty image
+    const template_prompt = "Create an animated creative gaming card from the attached image and this suggestion prompt: " + data.prompt_for_image_generation;
+
+    const generatedImage = await generateImage({
+        generationPrompt: template_prompt,
+        imageInput: image,
+        modelName: 'gemini-2.5-flash-image',
+    });
+
+    if (!generatedImage) {
+        throw new Error("Failed to generate image");
+    }
+
+    const timestamp = Date.now();
+    const filename = `generated-cards/${timestamp}.jpg`;
+    const s3Url = await uploadBase64ToS3(generatedImage, filename, 'image/jpeg');
+
     res.json({
       success: true,
-      image: EMPTY_IMAGE_4_5
+      image: s3Url
     });
 
   } catch (error: any) {
@@ -23,4 +36,3 @@ router.post('/save', async (req: Request, res: Response) => {
 });
 
 export default router;
-
