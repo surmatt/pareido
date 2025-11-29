@@ -161,7 +161,6 @@ export function CameraView() {
         id: Date.now().toString(),
         timestamp: Date.now(),
         image: responseData.image, // The empty 4:5 image from server
-        originalImage: capturedImage, // Save original too just in case
         analysis: result
       }
 
