@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ImagePlus, Loader2 } from "lucide-react"
 import { ResultDialog } from "./ResultDialog"
+import { LevelProgress } from "./LevelProgress"
+import { useLevelSystem } from "@/lib/level-system"
 
 interface MaterialCounts {
   metal: number
@@ -26,6 +28,7 @@ export function CameraView() {
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
+  const { gainXP } = useLevelSystem()
 
   useEffect(() => {
     async function setupCamera() {
@@ -79,6 +82,7 @@ export function CameraView() {
       const data = await response.json()
       setResult(data)
       setShowModal(true)
+      gainXP(50 + Math.floor(Math.random() * 20)) // Award random XP between 50-70 for scanning
     } catch (error) {
       console.error("Error analyzing image:", error)
       alert("Failed to analyze image. Please try again.")
@@ -133,6 +137,7 @@ export function CameraView() {
 
   return (
     <>
+      <LevelProgress />
       {/* Camera View */}
       <div className="flex-1 overflow-hidden relative bg-black">
         <video 

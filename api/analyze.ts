@@ -34,8 +34,10 @@ router.post('/analyze', async (req: Request, res: Response) => {
     const ai = new GoogleGenAI({ apiKey });
     const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
 
+    console.log('Analyzing image... on model gemini-2.5-flash');
+
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-2.5-flash',
       contents: [
         {
           parts: [
@@ -46,9 +48,9 @@ router.post('/analyze', async (req: Request, res: Response) => {
       ],
       config: {
         responseMimeType: 'application/json',
-        thinkingConfig: {
-            thinkingLevel: ThinkingLevel.LOW
-        }
+        // thinkingConfig: {
+        //     thinkingLevel: ThinkingLevel.LOW
+        // }
       }
     });
 
