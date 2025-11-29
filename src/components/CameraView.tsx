@@ -2,8 +2,9 @@ import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ImagePlus, Loader2 } from "lucide-react"
 import { ResultDialog } from "./ResultDialog"
-import { LevelProgress } from "./LevelProgress"
+import { GameHUD } from "./GameHUD"
 import { useLevelSystem } from "@/lib/level-system"
+import { useMaterialSystem } from "@/lib/material-system"
 
 interface MaterialCounts {
   metal: number
@@ -29,6 +30,7 @@ export function CameraView() {
   const [showModal, setShowModal] = useState(false)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
   const { gainXP } = useLevelSystem()
+  const { gainMaterials } = useMaterialSystem()
 
   useEffect(() => {
     async function setupCamera() {
@@ -131,13 +133,21 @@ export function CameraView() {
 
   const handleDeconstruct = () => {
     console.log("Deconstructing for materials:", result?.materials)
+    if (result?.materials) {
+      gainMaterials({
+        metal: result.materials.metal,
+        synthetic: result.materials.synthetic,
+        stone: result.materials.stone,
+        organic: result.materials.organic,
+        fabric: result.materials.fabric
+      })
+    }
     setShowModal(false)
-    // TODO: Implement salvage logic
   }
 
   return (
     <>
-      <LevelProgress />
+      <GameHUD />
       {/* Camera View */}
       <div className="flex-1 overflow-hidden relative bg-black">
         <video 

@@ -1,6 +1,7 @@
 import { CameraView } from "@/components/CameraView"
 import { Routes, Route } from "react-router-dom"
 import { Dashboard } from "@/pages/Dashboard"
+import { MaterialsPage } from "@/pages/MaterialsPage"
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<CameraView />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/materials" element={<MaterialsPage />} />
         </Routes>
       </div>
     </div>
