@@ -24,6 +24,7 @@ When you receive an image, your task is to perform the following analysis and ge
     * A small, diamond-shaped gem at the bottom of the card, with its color and text indicating the rarity (e.g., grey for Common, blue for Rare, purple for Epic, orange for Legendary).
     * A central character image needs to be animated, Hearthstone-like personage quality.
     * Do not extract background, only the animated personage.
+    * Do not add description of the personage.
 
 **Final Output Format:**
 
