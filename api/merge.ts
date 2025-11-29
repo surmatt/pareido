@@ -1,36 +1,45 @@
 import express, { Request, Response } from 'express';
-import { mergeEntities } from '../src/lib/merger.js';
-import { MERGE_PROMPT } from '../prompts.js';
+import { mergeCards } from '../src/lib/card_merger.ts';
+import { GalleryItem } from '../src/common/types.ts';
+import { uploadBase64ToS3 } from '../src/lib/s3Client.ts';
 
 const router = express.Router();
 
 router.post('/merge', async (req: Request, res: Response) => {
   try {
-    const { image1, name1, image2, name2 } = req.body;
+    const { card1, card2 } = req.body;
     
-    // Validation is handled in mergeEntities, but good to check basic params here too
-    if (!image1 || !image2 || !name1 || !name2) {
-      res.status(400).json({ error: 'Two images and two names are required' });
+    // Validate that both cards are provided
+    if (!card1 || !card2) {
+      res.status(400).json({ error: 'Two cards are required for merging' });
       return;
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      res.status(500).json({ error: 'Server configuration error: Missing API Key' });
+    // Validate card structure
+    if (!card1.image && !card1.originalImage) {
+      res.status(400).json({ error: 'Card 1 must have a valid image' });
+      return;
+    }
+    if (!card2.image && !card2.originalImage) {
+      res.status(400).json({ error: 'Card 2 must have a valid image' });
       return;
     }
 
-    const data = await mergeEntities({
-        image1,
-        name1,
-        image2,
-        name2,
-        apiKey,
-        mergePrompt: MERGE_PROMPT,
-        modelName: 'gemini-3-pro-image-preview'
+    console.log(`Merging cards: "${card1.analysis?.name}" + "${card2.analysis?.name}"`);
+
+    // Use the mergeCards function to create the merged card
+    const mergedCard = await mergeCards(card1 as GalleryItem, card2 as GalleryItem);
+
+    // Upload the merged image to S3
+    const timestamp = Date.now();
+    const filename = `merged-cards/${timestamp}.jpg`;
+    const s3Url = await uploadBase64ToS3(mergedCard.image, filename, 'image/jpeg');
+
+    // Return the merged card with the S3 URL
+    res.json({
+      ...mergedCard,
+      image: s3Url
     });
-
-    res.json(data);
 
   } catch (error: any) {
     console.error('API Error:', error);
