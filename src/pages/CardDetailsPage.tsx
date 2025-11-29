@@ -150,11 +150,6 @@ export function CardDetailsPage() {
               className="absolute inset-0 w-full h-full object-cover"
             />
           )}
-          <div className="absolute top-4 right-4">
-             <Badge className="bg-black/60 backdrop-blur text-lg px-3 py-1 border-white/20">
-              {item.analysis.creativityScore}
-             </Badge>
-          </div>
         </div>
 
         {/* Materials */}

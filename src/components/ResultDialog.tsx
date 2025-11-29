@@ -53,6 +53,7 @@ export function ResultDialog({
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => {
+      if (isSaving) return
       if (!isOpen) {
         onDeconstruct()
       }
@@ -103,6 +104,7 @@ export function ResultDialog({
             variant="destructive" 
             onClick={onDeconstruct}
             className="w-full sm:flex-1 gap-2 bg-red-900/20 text-red-400 hover:bg-red-900/40 border-red-900/50"
+            disabled={isSaving}
           >
             <Hammer className="h-4 w-4" />
             Deconstruct

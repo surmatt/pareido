@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Save } from "lucide-react"
+import { ArrowLeft, Save } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { Badge } from "@/components/ui/badge"
 
 interface MaterialCounts {
   metal: number
@@ -83,31 +82,12 @@ export function GalleryPage() {
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                   )}
-                  <div className="absolute top-2 right-2">
-                    <Badge variant="secondary" className="bg-black/50 backdrop-blur-md text-white border-white/20">
-                      {item.analysis.creativityScore}
-                    </Badge>
-                  </div>
                 </div>
-                
+
                 <div className="p-3 flex-1 flex flex-col">
                   <h3 className="font-bold text-sm mb-1 truncate">{item.analysis.name}</h3>
                   <div className="text-xs text-zinc-500 mb-3">
                     {new Date(item.timestamp).toLocaleDateString()}
-                  </div>
-                  
-                  <div className="mt-auto flex gap-2">
-                    <Button 
-                      variant="destructive" 
-                      size="icon" 
-                      className="h-8 w-8 ml-auto bg-red-900/20 text-red-400 hover:bg-red-900/40 border-red-900/50"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(item.id);
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
                   </div>
                 </div>
               </div>
