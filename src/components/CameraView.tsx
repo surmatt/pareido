@@ -25,6 +25,7 @@ export function CameraView() {
   const [analyzing, setAnalyzing] = useState(false)
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [capturedImage, setCapturedImage] = useState<string | null>(null)
 
   useEffect(() => {
     async function setupCamera() {
@@ -50,6 +51,15 @@ export function CameraView() {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (!videoRef.current) return
+
+    if (!analyzing && !showModal) {
+      videoRef.current.play().catch(() => {})
+      setCapturedImage(null)
+    }
+  }, [analyzing, showModal])
 
   const analyzeImage = async (imageData: string) => {
     setAnalyzing(true)
@@ -79,7 +89,8 @@ export function CameraView() {
 
   const handleCapture = () => {
     if (!videoRef.current) return
-    
+    videoRef.current.pause()
+
     const canvas = document.createElement("canvas")
     canvas.width = videoRef.current.videoWidth
     canvas.height = videoRef.current.videoHeight
@@ -101,6 +112,7 @@ export function CameraView() {
       const reader = new FileReader()
       reader.onload = (e) => {
         const imageData = e.target?.result as string
+        setCapturedImage(imageData)
         analyzeImage(imageData)
       }
       reader.readAsDataURL(file)
@@ -131,6 +143,14 @@ export function CameraView() {
           className="h-full w-full object-cover"
         />
         
+        {capturedImage && (
+          <img 
+            src={capturedImage} 
+            alt="Captured" 
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+
         {analyzing && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm">
             <div className="text-center text-white">
