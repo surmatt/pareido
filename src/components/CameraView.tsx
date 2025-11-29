@@ -84,7 +84,7 @@ export function CameraView() {
       const data = await response.json()
       setResult(data)
       setShowModal(true)
-      gainXP(50 + Math.floor(Math.random() * 20)) // Award random XP between 50-70 for scanning
+      gainXP(data.creativityScore) // Award random XP between 50-70 for scanning
     } catch (error) {
       console.error("Error analyzing image:", error)
       alert("Failed to analyze image. Please try again.")
@@ -165,16 +165,16 @@ export function CameraView() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}
-
-        {analyzing && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm">
-            <div className="text-center text-white">
-              <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4" />
-              <p className="text-lg font-medium">Scanning Resonant Signal...</p>
-            </div>
-          </div>
-        )}
       </div>
+
+      {analyzing && (
+        <div className="absolute inset-0 z-[60] bg-black/50 flex items-center justify-center backdrop-blur-sm">
+          <div className="text-center text-white">
+            <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4" />
+            <p className="text-lg font-medium">Scanning Resonant Signal...</p>
+          </div>
+        </div>
+      )}
 
       {/* Controls Overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-8 pb-12 bg-gradient-to-t from-black/80 to-transparent">
