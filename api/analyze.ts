@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { analyzeImage } from '../src/lib/analyzer.js';
-import { ANALYSIS_PROMPT } from '../prompts.js';
+import { analyzeImage } from '../src/lib/analyzer.ts';
+import { ANALYSIS_PROMPT } from '../prompts.ts';
 
 const router = express.Router();
 

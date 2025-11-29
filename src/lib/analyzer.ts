@@ -1,7 +1,7 @@
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { normalizeMaterials } from './utils.js';
+import { normalizeMaterials } from './utils.ts';
 
 interface AnalysisResponse {
   name: string;

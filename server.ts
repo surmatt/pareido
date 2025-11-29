@@ -2,9 +2,9 @@ import fs from 'node:fs/promises';
 import express, { Request, Response, NextFunction } from 'express';
 import compression from 'compression';
 import sirv from 'sirv';
-import analyzeRouter from './api/analyze.js';
-import saveRouter from './api/save.js';
-import mergeRouter from './api/merge.js';
+import analyzeRouter from './api/analyze.ts';
+import saveRouter from './api/save.ts';
+import mergeRouter from './api/merge.ts';
 // Note: When running with tsx/node in ESM mode, we keep .js extensions for imports 
 // or configure tsconfig to handle resolution. Since we are using tsx, it handles .ts files 
 // but local imports might still need careful handling. 

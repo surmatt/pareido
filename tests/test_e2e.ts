@@ -1,5 +1,4 @@
 import analyzeImage from '../src/lib/analyzer.ts';
-import { ThinkingLevel } from '@google/genai';
 import { readFileSync } from 'fs';
 import { generateImage } from '../src/lib/image_generator.ts';
 import { join } from 'path';
