@@ -50,7 +50,12 @@ export function ResultDialog({
   if (!result) return null
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={(isOpen) => {
+      if (!isOpen) {
+        onDeconstruct()
+      }
+      onOpenChange(isOpen)
+    }}>
       <DialogContent className="sm:max-w-[425px] bg-zinc-950 border-zinc-800 text-white" showCloseButton={false}>
         <DialogHeader>
           <DialogTitle className="flex items-center justify-center gap-2 text-2xl">
