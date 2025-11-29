@@ -3,11 +3,46 @@ import { GoogleGenAI } from "@google/genai";
 interface ImageGeneratorOptions {
     generationPrompt: string;
     imageInput?: string;
+    templateImageInput?: string;
     modelName?: string;
     apiKey?: string;
     outputPath?: string;
 }
 
+/**
+ * Reads an image from a file path or base64 string and returns inline data for API content
+ * @param imageSource - Either a file path to an image or a base64-encoded image string
+ * @returns Promise resolving to the inline data object for the image
+ */
+async function readImageToInlineData(imageSource: string): Promise<{ inlineData: { mimeType: string; data: string } }> {
+    if (imageSource.startsWith("data:image") || imageSource.startsWith("/9j/") || imageSource.includes("base64")) {
+        // Base64 encoded image
+        const base64Data = imageSource.includes("base64,")
+            ? imageSource.split("base64,")[1]
+            : imageSource;
+
+        return {
+            inlineData: {
+                mimeType: "image/jpeg",
+                data: base64Data,
+            },
+        };
+    } else {
+        // File path - read and convert to base64
+        const fs = await import("fs");
+        const path = await import("path");
+        const resolvedPath = path.resolve(imageSource);
+        const fileBuffer = fs.readFileSync(resolvedPath);
+        const base64Data = fileBuffer.toString("base64");
+
+        return {
+            inlineData: {
+                mimeType: "image/jpeg",
+                data: base64Data,
+            },
+        };
+    }
+}
 
 /**
  * Generates an image using Google's Gemini 2.5 Flash model
@@ -33,33 +68,14 @@ export async function generateImage(
 
     // If an image is provided, add it to the content
     if (options.imageInput) {
-        if (options.imageInput.startsWith("data:image") || options.imageInput.startsWith("/9j/") || options.imageInput.includes("base64")) {
-            // Base64 encoded image
-            const base64Data = options.imageInput.includes("base64,")
-                ? options.imageInput.split("base64,")[1]
-                : options.imageInput;
+        const imageData = await readImageToInlineData(options.imageInput);
+        contentParts.push(imageData);
+    }
 
-            contentParts.push({
-                inlineData: {
-                    mimeType: "image/jpeg",
-                    data: base64Data,
-                },
-            });
-        } else {
-            // File path - read and convert to base64
-            const fs = await import("fs");
-            const path = await import("path");
-            const resolvedPath = path.resolve(options.imageInput);
-            const fileBuffer = fs.readFileSync(resolvedPath);
-            const base64Data = fileBuffer.toString("base64");
-
-            contentParts.push({
-                inlineData: {
-                    mimeType: "image/jpeg",
-                    data: base64Data,
-                },
-            });
-        }
+    // If a template image is provided, add it to the content
+    if (options.templateImageInput) {
+        const templateImageData = await readImageToInlineData(options.templateImageInput);
+        contentParts.push(templateImageData);
     }
 
     const response = await client.models.generateContent({

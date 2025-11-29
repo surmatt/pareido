@@ -20,10 +20,10 @@ When you receive an image, your task is to perform the following analysis and ge
     *   **fabric:** Mesh, shielding, discarded fashion, fiber optics, dust.
 
 5.  **Generate Card Image Prompt:** Create a concise and effective prompt for an image-generation model (specifically, a "nano-banana pro model / gemini-2.5-image-pro") to create a visually stunning, playable card. This prompt must include:
-    * The animated character concept based on the original object.
+    * The animated character concept based on the original object. Be creative and think which animation can be created from the image.
     * A small, diamond-shaped gem at the bottom of the card, with its color and text indicating the rarity (e.g., grey for Common, blue for Rare, purple for Epic, orange for Legendary).
     * A central character image needs to be animated, Hearthstone-like personage quality.
-    * A name of the character has to be on the card.
+    * Do not extract background, only the animated personage.
 
 **Final Output Format:**
 
@@ -40,6 +40,6 @@ Your entire response MUST be a single, valid JSON object following the structure
     "organic": 0,
     "fabric": 0
   },
-  "prompt_for_image_generation": "An image generation prompt for the card. Max 2-3 sentences."
+  "prompt_for_image_generation": "An image generation prompt for the card. Max 2 sentences."
 }
 ```
