@@ -68,10 +68,10 @@ The scanning and transformation process in action. Left column shows raw input p
 
 | Input (Raw Scan) | AI-Generated Card (Resonant) |
 |---|---|
-| <img src="tests/assets/photo_2025-11-29%2012.45.24.jpeg" width="300"/> | <img src="tests/output/generated_image_1.jpg" width="300"/> |
-| <img src="tests/assets/photo_2025-11-29%2012.45.31.jpeg" width="300"/> | <img src="tests/output/generated_image_3.jpg" width="300"/> |
-| <img src="tests/assets/photo_2025-11-29%2012.45.37.jpeg" width="300"/> | <img src="tests/output/generated_image_4.jpg" width="300"/> |
-| <img src="tests/assets/photo_2025-11-29%2012.45.43.jpeg" width="300"/> | <img src="tests/output/generated_image_5.jpg" width="300"/> |
+| <img src="tests/assets/photo_2025-11-29%2012.45.24.jpeg" width="400"/> | <img src="tests/output/generated_image_1.jpg" width="400"/> |
+| <img src="tests/assets/photo_2025-11-29%2012.45.31.jpeg" width="400"/> | <img src="tests/output/generated_image_3.jpg" width="400"/> |
+| <img src="tests/assets/photo_2025-11-29%2012.45.37.jpeg" width="400"/> | <img src="tests/output/generated_image_4.jpg" width="400"/> |
+| <img src="tests/assets/photo_2025-11-29%2012.45.43.jpeg" width="400"/> | <img src="tests/output/generated_image_5.jpg" width="400"/> |
 
 ---
 
