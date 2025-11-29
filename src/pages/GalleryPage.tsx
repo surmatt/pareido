@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { ArrowLeft, Trash2, Hammer, Save } from "lucide-react"
+import { ArrowLeft, Trash2, Save } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { Badge } from "@/components/ui/badge"
@@ -61,7 +60,7 @@ export function GalleryPage() {
         </h1>
       </div>
 
-      <ScrollArea className="flex-1 p-6">
+      <div className="flex-1 overflow-y-auto p-6">
         <div className="grid grid-cols-2 gap-4 pb-20">
           {items.length === 0 ? (
             <div className="col-span-2 text-center text-zinc-500 py-12">
@@ -70,7 +69,11 @@ export function GalleryPage() {
             </div>
           ) : (
             items.map((item) => (
-              <div key={item.id} className="bg-zinc-900/50 rounded-xl overflow-hidden border border-zinc-800 flex flex-col">
+              <div 
+                key={item.id} 
+                className="bg-zinc-900/50 rounded-xl overflow-hidden border border-zinc-800 flex flex-col cursor-pointer transition-colors hover:border-zinc-700"
+                onClick={() => navigate(`/gallery/${item.id}`)}
+              >
                 <div className="aspect-[4/5] relative bg-zinc-900">
                   {/* We prefer originalImage if available, otherwise fallback to the saved image (which might be empty) */}
                   {(item.image || item.originalImage) && (
@@ -98,7 +101,10 @@ export function GalleryPage() {
                       variant="destructive" 
                       size="icon" 
                       className="h-8 w-8 ml-auto bg-red-900/20 text-red-400 hover:bg-red-900/40 border-red-900/50"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(item.id);
+                      }}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -108,7 +114,7 @@ export function GalleryPage() {
             ))
           )}
         </div>
-      </ScrollArea>
+      </div>
     </div>
   )
 }

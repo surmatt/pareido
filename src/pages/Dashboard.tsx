@@ -85,7 +85,7 @@ export function Dashboard() {
             </div>
             <div className="bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
               <div className="text-sm text-zinc-500 mb-1">Total XP</div>
-              <div className="text-3xl font-bold font-mono text-primary">
+              <div className="text-3xl font-bold font-mono">
                 {Math.floor(totalXP).toLocaleString()}
               </div>
             </div>

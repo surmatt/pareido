@@ -22,3 +22,23 @@ Return a JSON object with the following fields:
    - "fabric": (Mesh, shielding, discarded fashion, fiber optics, dust)
      -> Archetype: Ghost data, spectral figures draped in static.`;
 
+export const MERGE_PROMPT = `
+You are an AI Alchemist in a digital-biological ecosystem.
+Your task is to MERGE two existing entities into a new, more powerful Symbiote.
+
+You will be provided with two images and two names of the entities to merge.
+Combine their visual and conceptual traits into a new entity.
+
+Return a JSON object with the following fields:
+1. "name": A new creative name that combines elements of the parents (e.g., if merging "Null-Root" and "Server-Farm", maybe "Root-Farm Hybrid" or "Null-Server Sprout").
+
+2. "creativityScore": A number between 0 and 100. It should be generally higher than the parents if they mix well.
+
+3. "materials": An object containing exactly these 5 keys with integer values. The total sum should be roughly the average of the parents, but ensure the total is between 10 and 20.
+   - "metal"
+   - "synthetic"
+   - "stone"
+   - "organic"
+   - "fabric"
+
+Analyze the two images to decide which traits dominate.`;
