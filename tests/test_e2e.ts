@@ -20,9 +20,11 @@ const result = await analyzeImage({
 
 console.log('Analysis Result:', result);
 
+const template_prompt = "Create an animated creative gaming card from the attached image and this suggestion prompt: " + result.prompt_for_image_generation;
+
 
 const image = await generateImage({
-    generationPrompt: result.prompt_for_image_generation,
+    generationPrompt: template_prompt,
     imageInput: 'tests/assets/photo_2025-11-29 12.45.24.jpeg',
     modelName: 'gemini-2.5-flash-image',
     outputPath: join('tests', 'output', 'generated_image.jpg'),
