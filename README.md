@@ -10,7 +10,7 @@
 
 ### 1. The Capture & Decision Phase: "Keep or Salvage"
 
-The process doesn't end with just taking the photo. Once the AI generates the "Resonant" (the character), you have a strategic choice to make immediately.
+The process doesn't end with just taking the photo. Once the AI generates the "Character", you have a strategic choice to make immediately.
 
 *   **The Scan**: You photograph a pile of scrap. The AI generates "Scrap Golem mk.1".
 *   **The Choice**:
@@ -24,7 +24,7 @@ The process doesn't end with just taking the photo. Once the AI generates the "R
 
 You don't just breed characters; you can now edit them using the materials you collected from dismantling others. This is **Image-to-Image Inpainting/Editing** powered by game mechanics.
 
-*   **The Workshop**: Select a Resonant from your Pocket.
+*   **The Workshop**: Select a Character from your Pocket.
 *   **Infusion**: Spend your collected materials to add specific visual traits.
     *   *Spend 50 Organic Essence*: The AI adds moss, vines, and flowers to your Cyber-Robot.
     *   *Spend 50 Neon Essence*: The AI adds glowing runes or LED strips to your Stone Golem.
@@ -64,9 +64,9 @@ This answers the question: "How do I show everyone I am better/more creative tha
 
 ## Examples
 
-The scanning and transformation process in action. Left column shows raw input photos of everyday objects; right column shows the AI-generated "Resonant" character cards.
+The scanning and transformation process in action. Left column shows raw input photos of everyday objects; right column shows the AI-generated "Character" character cards.
 
-| Input (Raw Scan) | AI-Generated Card (Resonant) |
+| Input (Raw Scan) | AI-Generated Card (Character) |
 |---|---|
 | <img src="tests/assets/photo_2025-11-29%2012.45.24.jpeg" width="400"/> | <img src="tests/output/generated_image_1.jpg" width="400"/> |
 | <img src="tests/assets/photo_2025-11-29%2012.45.31.jpeg" width="400"/> | <img src="tests/output/generated_image_3.jpg" width="400"/> |
