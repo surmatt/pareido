@@ -73,7 +73,7 @@ export async function generateImage(
         },
     });
 
-    console.log("API Response:", JSON.stringify(response, null, 2));
+    // console.log("API Response:", JSON.stringify(response, null, 2));
 
     // Extract the generated image data
     if (!response.candidates || !response.candidates[0] || !response.candidates[0].content) {
