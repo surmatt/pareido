@@ -40,7 +40,7 @@ Your entire response MUST be a single, valid JSON object following the structure
     "organic": 0,
     "fabric": 0
   },
-  "prompt": "An image generation prompt for the card."
+  "prompt_for_image_generation": "An image generation prompt for the card."
 }
 ```
 
@@ -58,5 +58,5 @@ Your entire response MUST be a single, valid JSON object following the structure
         "organic": 8,
         "fabric": 1
       },
-      "prompt": "A playable character card in the style of Magic the Gathering. The central art features the 'Cathode-Ray Dryad', a creature whose body is a broken vintage television with glowing vines and digital energy crackling from its screen. The art should feel animated and dynamic. At the bottom of the card, there is a small, purple, diamond-shaped gem with the text 'Epic'."
+      "prompt_for_image_generation": "A playable character card in the style of Magic the Gathering. The central art features the 'Cathode-Ray Dryad', a creature whose body is a broken vintage television with glowing vines and digital energy crackling from its screen. The art should feel animated and dynamic. At the bottom of the card, there is a small, purple, diamond-shaped gem with the text 'Epic'."
     }

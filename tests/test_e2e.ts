@@ -10,19 +10,19 @@ function readPrompt(filePath: string): string {
 
 export const ANALYSIS_PROMPT = readPrompt('tests/system_prompt.txt');
 
-// // With file path
-// const result = await analyzeImage({
-//     image: 'tests/assets/photo_2025-11-29 12.45.24.jpeg',
-//     modelName: 'gemini-flash-latest',
-//     //   thinkingLevel: ThinkingLevel.MEDIUM,
-//     analysisPrompt: ANALYSIS_PROMPT
-// });
+// With file path
+const result = await analyzeImage({
+    image: 'tests/assets/photo_2025-11-29 12.45.24.jpeg',
+    modelName: 'gemini-flash-latest',
+    //   thinkingLevel: ThinkingLevel.MEDIUM,
+    analysisPrompt: ANALYSIS_PROMPT
+});
 
-// console.log('Analysis Result:', result);
+console.log('Analysis Result:', result);
 
 
 const image = await generateImage({
-    generationPrompt: "Awesome image",
+    generationPrompt: result.prompt_for_image_generation,
     imageInput: 'tests/assets/photo_2025-11-29 12.45.24.jpeg',
     modelName: 'gemini-2.5-flash-image',
     outputPath: join('tests', 'output', 'generated_image.jpg'),

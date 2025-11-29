@@ -22,6 +22,8 @@ export async function generateImage(
         apiKey: process.env.GOOGLE_API_KEY,
     });
 
+    console.log("Generating image with prompt:", options.generationPrompt);
+
     // Build the content parts
     const contentParts: any[] = [
         {
