@@ -62,7 +62,7 @@ export function ResultDialog({
             {result.name}
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-400">
-            A new Resonant entity has been identified.
+            A new entity has been detected.
           </DialogDescription>
         </DialogHeader>
 

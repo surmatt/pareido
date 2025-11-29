@@ -171,7 +171,7 @@ export function CameraView() {
         <div className="absolute inset-0 z-[60] bg-black/50 flex items-center justify-center backdrop-blur-sm">
           <div className="text-center text-white">
             <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4" />
-            <p className="text-lg font-medium">Scanning Resonant Signal...</p>
+            <p className="text-lg font-medium">Scanning...</p>
           </div>
         </div>
       )}
