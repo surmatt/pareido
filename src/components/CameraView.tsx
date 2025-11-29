@@ -1,11 +1,30 @@
 import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ImagePlus } from "lucide-react"
+import { ImagePlus, Loader2 } from "lucide-react"
+import { ResultDialog } from "./ResultDialog"
+
+interface MaterialCounts {
+  metal: number
+  synthetic: number
+  stone: number
+  organic: number
+  fabric: number
+  [key: string]: number
+}
+
+interface AnalysisResult {
+  name: string
+  creativityScore: number
+  materials: MaterialCounts
+}
 
 export function CameraView() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [stream, setStream] = useState<MediaStream | null>(null)
+  const [analyzing, setAnalyzing] = useState(false)
+  const [result, setResult] = useState<AnalysisResult | null>(null)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     async function setupCamera() {
@@ -32,6 +51,32 @@ export function CameraView() {
     }
   }, [])
 
+  const analyzeImage = async (imageData: string) => {
+    setAnalyzing(true)
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: imageData }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Analysis failed')
+      }
+
+      const data = await response.json()
+      setResult(data)
+      setShowModal(true)
+    } catch (error) {
+      console.error("Error analyzing image:", error)
+      alert("Failed to analyze image. Please try again.")
+    } finally {
+      setAnalyzing(false)
+    }
+  }
+
   const handleCapture = () => {
     if (!videoRef.current) return
     
@@ -41,9 +86,8 @@ export function CameraView() {
     const ctx = canvas.getContext("2d")
     if (ctx) {
       ctx.drawImage(videoRef.current, 0, 0)
-      const imageData = canvas.toDataURL("image/png")
-      console.log("Captured image:", imageData)
-      // TODO: Handle captured image
+      const imageData = canvas.toDataURL("image/jpeg", 0.8)
+      analyzeImage(imageData)
     }
   }
 
@@ -57,17 +101,28 @@ export function CameraView() {
       const reader = new FileReader()
       reader.onload = (e) => {
         const imageData = e.target?.result as string
-        console.log("Imported image:", imageData)
-        // TODO: Handle imported image
+        analyzeImage(imageData)
       }
       reader.readAsDataURL(file)
     }
   }
 
+  const handleStabilize = () => {
+    console.log("Stabilizing character:", result)
+    setShowModal(false)
+    // TODO: Implement save logic
+  }
+
+  const handleDeconstruct = () => {
+    console.log("Deconstructing for materials:", result?.materials)
+    setShowModal(false)
+    // TODO: Implement salvage logic
+  }
+
   return (
     <>
       {/* Camera View */}
-      <div className="flex-1 overflow-hidden relative">
+      <div className="flex-1 overflow-hidden relative bg-black">
         <video 
           ref={videoRef}
           autoPlay 
@@ -75,6 +130,15 @@ export function CameraView() {
           muted
           className="h-full w-full object-cover"
         />
+        
+        {analyzing && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm">
+            <div className="text-center text-white">
+              <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4" />
+              <p className="text-lg font-medium">Scanning Resonant Signal...</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Controls Overlay */}
@@ -86,6 +150,7 @@ export function CameraView() {
             size="icon"
             className="h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 text-white"
             onClick={handleGalleryClick}
+            disabled={analyzing}
           >
             <ImagePlus className="h-6 w-6" />
           </Button>
@@ -102,14 +167,23 @@ export function CameraView() {
           <Button 
             className="h-20 w-20 rounded-full border-4 border-white bg-transparent hover:bg-white/20 p-1"
             onClick={handleCapture}
+            disabled={analyzing}
           >
             <div className="h-full w-full rounded-full bg-white" />
           </Button>
 
-          {/* Spacer for symmetry or potential flip camera button */}
+          {/* Spacer for symmetry */}
           <div className="w-12" />
         </div>
       </div>
+
+      <ResultDialog 
+        open={showModal} 
+        onOpenChange={setShowModal}
+        result={result}
+        onStabilize={handleStabilize}
+        onDeconstruct={handleDeconstruct}
+      />
     </>
   )
 }
